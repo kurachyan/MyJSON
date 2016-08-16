@@ -15,6 +15,17 @@
     <script src="/js/default.js"></script>
 
     <script src="/js/localscript.js"></script>
+
+    <!-- Script （前処理）-->
+    <script>
+        var data = {
+            mz: 700,
+            pc: 6001,
+            text: "Retro PC",
+            today: new Date()
+        }
+        var jsondata;
+    </script>
 </head>
 <body>
     <!---
@@ -41,17 +52,14 @@
                onclick="BootJob()">
         <input type="button" name="Exit" value="終了"
                onclick="ExitJob()">
-<!---
         <br>
         <input type="button" name="Encode" value="生成"
                onclick="EncJob()">
         <input type="button" name="Decode" value="復号"
                onclick="DecJob()">
-//--->
     </form>
     <script>
         let local = new LocalTimerScript();
-
 
         function BootJob() {
             // 処理開始
@@ -70,6 +78,32 @@
             local.StopTimer();
             document.getElementById("footinfo").innerHTML = "待機中です。";
         }
-     </script>
+        function EncJob() {
+            // JSON生成
+            if (window.JSON) {
+                // document.getElementById("footinfo").innerHTML = "JSON動作可能です。";
+                jsondata = JSON.stringify(data);
+                document.getElementById("footinfo").innerHTML = "生成 ： "+jsondata;
+            } else {
+                document.getElementById("footinfo").innerHTML = "JSON動作不可能です。";
+            }
+        }
+        function DecJob() {
+            // JSON復号
+            if (window.JSON) {
+                // document.getElementById("footinfo").innerHTML = "JSON動作可能です。";
+                let obj = JSON.parse(jsondata);
+                let wmz = obj.mz;
+                let wpc = obj.pc;
+                let wtext = obj.text;
+                let wtoday = obj.today;
+                let txt = "mz = " + wmz + ";\npc = " + wpc + ";\ntext = " + wtext + ";\ntoday = " + wtoday + ";";
+                resultLog(setLogTime(), txt);
+                document.getElementById("footinfo").innerHTML = "JSON復号完了です。";
+            } else {
+                document.getElementById("footinfo").innerHTML = "JSON復号失敗です。";
+            }
+        }
+    </script>
 </body>
 </html>
