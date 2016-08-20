@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <title>MyJSON1_2</title>
+
+    <!-- WinJS 参照 -->
+    <link href="//Microsoft.WinJS.2.0/css/ui-dark.css" rel="stylesheet" />
+    <script src="//Microsoft.WinJS.2.0/js/base.js"></script>
+    <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
+
+    <!-- MyJSON1_2 参照 -->
+    <link href="/css/default.css" rel="stylesheet" />
+    <script src="/js/default.js"></script>
+
+    <script src="/js/localscript.js"></script>
+
+    <!-- Script （前処理）-->
+    <script>
+        var data = {
+            mz: 700,
+            pc: 6001,
+            text: "Retro PC",
+            today: new Date()
+        }
+        var jsondata;
+    </script>
+</head>
+<body>
+<!---
+    <p>コンテンツをここに挿入</p>
+--->
+
+    <p>ＭｙＪＳＯＮ１＿２</p>
+
+    <!--- Header --->
+    <form name="myTime">
+        <div id="timeinfo">登録時間を表示します。</div>
+    </form>
+
+    <!--- Body --->
+    <!--- 詳細情報 --->
+    <form name="myForm">
+        <div id="result">詳細情報を表示します。</div>
+    </form>
+
+    <!--- Footer --->
+    <form name="myFooter">
+        <div id="footinfo">待機中です。</div><br>
+        <input type="button" name="Boot" value="開始"
+               onclick="BootJob()">
+        <input type="button" name="Exit" value="終了"
+               onclick="ExitJob()">
+        <br>
+        <input type="button" name="Encode" value="生成"
+               onclick="EncJob()">
+        <input type="button" name="Decode" value="復号"
+               onclick="DecJob()">
+    </form>
+    <script>
+        let local = new LocalTimerScript();         // Local Timer Script Module
+        let json = new LocalJSONScript();           // Local JSON Script Module
+
+        function BootJob() {
+            // 処理開始
+            if (local.CheckTimer() == false) {      // タイマー未稼働？
+                // タイマー稼働
+                local.BootTimer();
+                document.getElementById("footinfo").innerHTML = "Timer稼働中です。";
+
+            } else {
+                // 稼働済み
+                document.getElementById("footinfo").innerHTML = "二重稼働は出来ません。";
+            }
+        }
+        function ExitJob() {
+            // 処理終了
+            local.StopTimer();
+            document.getElementById("footinfo").innerHTML = "待機中です。";
+        }
+        function EncJob() {
+            // JSON生成
+            json.Start();
+
+            if (json.Check()) {         // JSON動作可能？
+                // document.getElementById("footinfo").innerHTML = "JSON動作可能です。";
+                let work = json.Encode(data);
+                document.getElementById("footinfo").innerHTML = "生成 ： " + work;
+            } else {
+                document.getElementById("footinfo").innerHTML = "JSON動作不可能です。";
+            }
+        }
+        function DecJob() {
+            // JSON復号
+            if (json.Check()) {         // JSON動作可能？
+                // document.getElementById("footinfo").innerHTML = "JSON動作可能です。";
+                json.Decode();
+                document.getElementById("footinfo").innerHTML = "JSON復号完了です。";
+                document.getElementById("result").innerHTML = "\"today\" : " + json.GetValue(json.SearchKey("today"));
+
+                json.Clear();
+                json.End();
+            }
+/*
+            if (window.JSON) {
+                // document.getElementById("footinfo").innerHTML = "JSON動作可能です。";
+                let obj = JSON.parse(jsondata);
+                let wmz = obj.mz;
+                let wpc = obj.pc;
+                let wtext = obj.text;
+                let wtoday = obj.today;
+                let txt = "mz = " + wmz + ";\npc = " + wpc + ";\ntext = " + wtext + ";\ntoday = " + wtoday + ";";
+                resultLog(setLogTime(), txt);
+                document.getElementById("footinfo").innerHTML = "JSON復号完了です。";
+            } else {
+                document.getElementById("footinfo").innerHTML = "JSON復号失敗です。";
+            }
+*/
+        }
+    </script>
+</body>
+</html>
