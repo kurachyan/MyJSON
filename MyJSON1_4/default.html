@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <title>MyJSON1_4</title>
 
@@ -17,6 +17,9 @@
     <script src="/js/localscript.js"></script>
     <script src="/js/LocalTimerscript.js"></script>
     <script src="/js/LocalJSONscript.js"></script>
+
+    <script src="/js/Function.js"></script>
+    <script src="/js/Variable.js"></script>
     <script src="/js/Dictionary.js"></script>
 
     <!-- Script （前処理） -->
@@ -28,12 +31,17 @@
             today: new Date()
         }
         var jsondata;
+
+        function test1() {
+            let a1 = 0;
+        }
+        var b1 = [0, 1, 2, 3, 4, 5];
     </script>
 </head>
 <body>
-<!---
-        <p>コンテンツをここに挿入</p>
-//--->
+    <!---
+            <p>コンテンツをここに挿入</p>
+    //--->
 
     <p>ＭｙＪＳＯＮ１＿４</p>
 
@@ -63,8 +71,11 @@
     </form>
     <script>
         let local = new LocalTimerScript();         // Local Timer Script Module
-//        let json = new LocalJSONScript();           // Local JSON Script Module
-        let dictionary = new LocalDictionaryScript();           // Local Dictionary Script Module
+        let json = new LocalJSONScript();           // Local JSON Script Module
+        let dic = new LocalDictionaryScript();      // Local Dictionary Script Module
+        let func = new LocalFunctionScript();       // Local Function Script Module
+        let vari = new LocalVariableScript();       // Local Variable Script Module
+        let sds = new SubDictionaryScript();        // Sub Dictionary Script Module
 
         function BootJob() {
             // 処理開始
@@ -85,34 +96,34 @@
         }
 
         function EncJob() {
-/*
-            // JSON生成
-            json.Start();
+            /*
+                        // JSON生成
+                        json.Start();
 
-            if (json.Check()) {         // JSON動作可能？
-                // document.getElementById("footinfo").innerHTML = "JSON動作可能です。";
-                let work = json.Encode(data);
-                document.getElementById("footinfo").innerHTML = "生成 ： " + work;
-            } else {
-                document.getElementById("footinfo").innerHTML = "JSON動作不可能です。";
-            }
-*/
+                        if (json.Check()) {         // JSON動作可能？
+                            // document.getElementById("footinfo").innerHTML = "JSON動作可能です。";
+                            let work = json.Encode(data);
+                            document.getElementById("footinfo").innerHTML = "生成 ： " + work;
+                        } else {
+                            document.getElementById("footinfo").innerHTML = "JSON動作不可能です。";
+                        }
+            */
         }
 
         function DecJob() {
-/*
-            // JSON復号
-            if (json.Check()) {         // JSON動作可能？
-                json.Decode();
-//                document.getElementById("footinfo").innerHTML = "JSON復号完了です。";
-                let work = json.ReEncode();
-//                document.getElementById("result").innerHTML = "\"today\" : " + json.GetValue(json.SearchKey("today"));
-                document.getElementById("result").innerHTML = "再生成：" + work;
+            /*
+                        // JSON復号
+                        if (json.Check()) {         // JSON動作可能？
+                            json.Decode();
+            //                document.getElementById("footinfo").innerHTML = "JSON復号完了です。";
+                            let work = json.ReEncode();
+            //                document.getElementById("result").innerHTML = "\"today\" : " + json.GetValue(json.SearchKey("today"));
+                            document.getElementById("result").innerHTML = "再生成：" + work;
 
-                json.Clear();
-                json.End();
-            }
-*/
+                            json.Clear();
+                            json.End();
+                        }
+            */
         }
     </script>
 </body>
